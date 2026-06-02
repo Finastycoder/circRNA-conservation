@@ -1,13 +1,7 @@
-"species","s_label","category","gene_genome","gene_info","mrna_expr","mrna_info","circ_milk","circ_n_iso","circ_atlas","circ_atlas_n","final_status"
-"hsa","Human
-(hsa)","Primate",TRUE,"chr17, ENSG00000278540",TRUE,"GTEx: ubiquitously expressed",FALSE,0,TRUE,317,"circRNA in other tissues (circAtlas)"
-"mma","Rhesus
-(mma)","Primate",TRUE,"chr16, ENSMMUG00000009349",TRUE,"GTEx: ubiquitously expressed",FALSE,0,TRUE,92,"circRNA in other tissues (circAtlas)"
-"mmu","Mouse
-(mmu)","Rodent",TRUE,"chr11, ENSMUSG00000020532",TRUE,"GTEx: ubiquitously expressed",TRUE,9,TRUE,56,"circRNA in milk (our data)"
-"mfu","Long-winged
-bat (mfu)","Bat",TRUE,"scaffold0019, ENSMFUG00019034613243",TRUE,"polyA RNA: 2455,1530,1581 counts (mean=1889)",TRUE,6,NA,NA,"circRNA in milk (our data)"
-"mpi","Big-footed
-bat (mpi)","Bat",TRUE,"scaffold0021, ENSMPIG00021061614243",TRUE,"polyA RNA: 3728,3863,2692 counts (mean=3428)",TRUE,1,NA,NA,"circRNA in milk (our data)"
-"rsi","Horseshoe
-bat (rsi)","Bat",TRUE,"NW_017739011.1, gene-ACACA",TRUE,"RefSeq annotation",TRUE,8,NA,NA,"circRNA in milk (our data)"
+"species","s_label","category","gene_genome","mrna_expr","circ_milk","circ_n_iso","circ_atlas","circ_atlas_n"
+"hsa","Human (hsa)","Primate",TRUE,TRUE,FALSE,0,TRUE,317
+"mma","Rhesus (mma)","Primate",TRUE,TRUE,FALSE,0,TRUE,92
+"mmu","Mouse (mmu)","Rodent",TRUE,TRUE,TRUE,9,TRUE,56
+"mfu","L.bat (mfu)","Bat",TRUE,TRUE,TRUE,6,NA,NA
+"mpi","B.bat (mpi)","Bat",TRUE,TRUE,TRUE,1,NA,NA
+"rsi","H.bat (rsi)","Bat",TRUE,TRUE,TRUE,8,NA,NA

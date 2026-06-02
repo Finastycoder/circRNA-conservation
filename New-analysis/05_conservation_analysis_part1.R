@@ -116,14 +116,16 @@ lookup_mpi <- build_bat_mapping("mpi", "mpi.cq.csv",
   "genome and annotation/mpi.gff3",
   "New-analysis/blast/mpi_novel_gene_mapping.csv")
 
-# ---- Combine all ----
-cat("\n========== Mapping summary ==========\n")
+# ---- Combine all & normalize case ----
+cat("\n========== Mapping summary (case-normalized) ==========\n")
 gene_lookups <- list(hsa = lookup_hsa, mfu = lookup_mfu, mma = lookup_mma,
                      mmu = lookup_mmu, mpi = lookup_mpi, rsi = lookup_rsi)
 for (sp in names(gene_lookups)) {
-  cat(sprintf("%s: %d circ_ids → %d gene_names\n",
-              sp, nrow(gene_lookups[[sp]]),
-              length(unique(gene_lookups[[sp]]$gene_name))))
+  n_before <- length(unique(gene_lookups[[sp]]$gene_name))
+  gene_lookups[[sp]]$gene_name <- toupper(gene_lookups[[sp]]$gene_name)
+  n_after <- length(unique(gene_lookups[[sp]]$gene_name))
+  cat(sprintf("%s: %d circ_ids -> %d gene_names (merged %d by toupper)\n",
+              sp, nrow(gene_lookups[[sp]]), n_after, n_before - n_after))
 }
 
 saveRDS(gene_lookups, "New-analysis/gene_lookups.rds")
