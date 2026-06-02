@@ -61,7 +61,7 @@ has_acaca <- sapply(comb_genes_all, function(g) "ACACA" %in% g)
 bar_labels <- comb_size(comb_top18)
 bar_labels[has_acaca] <- paste0(bar_labels[has_acaca], " \U2605")
 
-pdf("New-analysis/figures/upset_top18.pdf", width = 11, height = 6.5)
+pdf("New-analysis/figures/upset_top18.pdf", width = 12, height = 8.5)
 htA <- UpSet(
   comb_top18,
   set_order = rev(set_names),
@@ -71,7 +71,7 @@ htA <- UpSet(
       comb_size(comb_top18),
       border = FALSE,
       gp = gpar(fill = bar_cols, col = bar_cols),
-      height = unit(4.5, "cm"),
+      height = unit(8, "cm"),
       axis_param = list(labels_rot = 0)
     ),
     annotation_name_side = "left",
