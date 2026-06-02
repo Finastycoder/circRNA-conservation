@@ -44,46 +44,46 @@ comb_mat <- make_comb_mat(gene_sets)
 comb_filt <- comb_mat[comb_degree(comb_mat) >= 3 & comb_size(comb_mat) > 0]
 comb_filt <- comb_filt[order(comb_size(comb_filt), decreasing = TRUE)]
 # Keep top 18 (covers all 6/5/4-way + top 3-way)
-comb_top18 <- comb_filt[1:min(18, length(comb_size(comb_filt)))]
+comb_top12 <- comb_filt[1:min(12, length(comb_size(comb_filt)))]
 
-deg <- comb_degree(comb_top18)
+deg <- comb_degree(comb_top12)
 deg_colors <- c("6" = "#C0392B", "5" = "#E67E22", "4" = "#27AE60", "3" = "#3498DB")
 bar_cols <- deg_colors[as.character(deg)]
 
 # Annotate which bars contain ACACA
-comb_genes_all <- lapply(names(comb_size(comb_top18)), function(cn) {
+comb_genes_all <- lapply(names(comb_size(comb_top12)), function(cn) {
   extract_comb(comb_mat, cn)
 })
-names(comb_genes_all) <- names(comb_size(comb_top18))
+names(comb_genes_all) <- names(comb_size(comb_top12))
 has_acaca <- sapply(comb_genes_all, function(g) "ACACA" %in% g)
 
 # Custom bar labels: add ★ for ACACA-containing combos
-bar_labels <- comb_size(comb_top18)
+bar_labels <- comb_size(comb_top12)
 bar_labels[has_acaca] <- paste0(bar_labels[has_acaca], " \U2605")
 
-pdf("New-analysis/figures/upset_top18.pdf", width = 12, height = 8.5)
+pdf("New-analysis/figures/upset_top12.pdf", width = 12, height = 5.5)
 htA <- UpSet(
-  comb_top18,
+  comb_top12,
   set_order = rev(set_names),
-  comb_order = order(comb_size(comb_top18), decreasing = TRUE),
+  comb_order = order(comb_size(comb_top12), decreasing = TRUE),
   top_annotation = HeatmapAnnotation(
     "Shared genes" = anno_barplot(
-      comb_size(comb_top18),
+      comb_size(comb_top12),
       border = FALSE,
       gp = gpar(fill = bar_cols, col = bar_cols),
-      height = unit(8, "cm"),
+      height = unit(7, "cm"),
       axis_param = list(labels_rot = 0)
     ),
     annotation_name_side = "left",
     annotation_name_gp = gpar(fontsize = 9)
   ),
   right_annotation = upset_right_annotation(
-    comb_top18,
+    comb_top12,
     gp = gpar(fill = sp_colors[set_names]),
     annotation_name_gp = gpar(fontsize = 8),
     axis_param = list(labels_rot = 0)
   ),
-  row_names_gp = gpar(fontsize = 9),
+  row_names_gp = gpar(fontsize = 7),
   column_title = "circRNA host gene conservation (≥3 species)",
   column_title_gp = gpar(fontsize = 12, fontface = "bold")
 )
@@ -257,6 +257,6 @@ ggsave("New-analysis/figures/dotplot_acaca_story.png", pC,
        width = 183, height = 110, units = "mm", dpi = 300)
 
 cat("\n=== All panels generated ===\n")
-cat("Panel A: upset_top18.pdf\n")
+cat("Panel A: upset_top12.pdf\n")
 cat("Panel B: venn_acaca_4way.pdf\n")
 cat("Panel C: dotplot_acaca_story.pdf\n")
