@@ -1,0 +1,12 @@
+circ_id,gene_id,gene_name,mpi1_width,mpi1_strand,mpi1_circtype,mpi2_width,mpi2_strand,mpi2_circtype,mpi3_width,mpi3_strand,mpi3_circtype
+scaffold0007:91656591|91656785,ENSMPIG00007082100244,novel_gene_158_62831269,195,+,exon,195,+,exon,195,+,exon
+scaffold0022:7463354|7463572,ENSMPIG00022013800244,novel_gene_314_62831269,219,-,exon,219,-,exon,219,-,exon
+scaffold0012:35400164|35400390,ENSMPIG00012033400244,evm.TU.scaffold0012.390,227,-,exon,227,-,exon,227,-,exon
+scaffold0004:48853609|48853940,ENSMPIG00004051124241,LYSMD2,332,-,exon,332,-,exon,332,-,exon
+scaffold0009:22152576|22153103,ENSMPIG00009017423233,AL590764.2,528,-,exon,528,-,exon,528,-,exon
+scaffold0008:78465787|78466437,ENSMPIG00008074500244,novel_gene_489_62831269,651,+,exon,651,+,exon,651,+,exon
+scaffold0028:13178839|13179749,ENSMPIG00028006800244,novel_gene_270_627a1eab,911,-,exon,911,-,exon,911,-,exon
+scaffold0001:139016259|139026238,ENSMPIG00001103002243,novel_gene_2345_627a1eab,9980,+,exon,9980,+,exon,9980,+,exon
+scaffold0028:12896623|12908373,ENSMPIG00028006800244,novel_gene_270_627a1eab,11751,-,exon,11751,-,exon,11751,-,exon
+scaffold0010:75678218|75692986,ENSMPIG00010083600244,evm.TU.scaffold0010.931,14769,+,exon,14769,+,exon,14769,+,exon
+scaffold0007:91656591|91742312,ENSMPIG00007082100244,novel_gene_158_62831269,85722,+,exon,85722,+,exon,85722,+,exon

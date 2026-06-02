@@ -1,0 +1,26 @@
+# Large genome files (managed separately)
+genome and annotation/*.fa
+genome and annotation/*.gtf
+genome and annotation/*.gff
+genome and annotation/*.gff3
+
+# R temporary files
+.Rhistory
+.RData
+
+# BLAST database binary files
+New-analysis/blast/all_ref_db.*
+New-analysis/blast/all_reference_proteins.faa
+
+# Downloaded BLAST tools
+tools/
+
+# Old analysis copies
+old/
+re_analysis/
+
+# BLAST intermediate output (binary/text, kept in New-analysis/blast/)
+New-analysis/blast/all_ref_db.*
+New-analysis/blast/all_reference_proteins.faa
+New-analysis/blast/*_pep.fa
+New-analysis/blast/*_pep.fa.gz
