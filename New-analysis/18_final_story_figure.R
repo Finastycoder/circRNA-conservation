@@ -64,7 +64,7 @@ bar_labels[has_acaca] <- paste0(bar_labels[has_acaca], " \U2605")
 pdf("New-analysis/figures/upset_top12.pdf", width = 12, height = 6)
 htA <- UpSet(
   comb_top12,
-  set_order = rev(set_names),
+  set_order = names(sort(sapply(gene_sets, length))),
   comb_order = order(comb_size(comb_top12), decreasing = TRUE),
   pt_size = unit(4, "mm"),
   lwd = 2,
