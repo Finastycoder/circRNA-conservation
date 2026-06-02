@@ -1,0 +1,13 @@
+"species","species_label","category","gene_in_genome","mRNA_evidence","circRNA_detected","n_isoforms"
+"hsa","Human
+(hsa)","Primate","Confirmed","Yes","Not detected",0
+"mma","Rhesus
+(mma)","Primate","Confirmed","Yes","Not detected",0
+"mmu","Mouse
+(mmu)","Rodent","Confirmed","Yes","Yes (4/6 species)",9
+"mfu","L-winged bat
+(mfu)","Bat","Confirmed","No/Unknown","Yes (4/6 species)",6
+"mpi","B-winged bat
+(mpi)","Bat","Confirmed","No/Unknown","Yes (4/6 species)",1
+"rsi","Horseshoe bat
+(rsi)","Bat","Confirmed","Yes","Yes (4/6 species)",8
