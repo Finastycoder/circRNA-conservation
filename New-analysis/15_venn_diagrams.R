@@ -22,11 +22,19 @@ for (sp in SPECIES) {
   cat(sprintf("  %s: %d genes\n", sp, n))
 }
 
-# Species sets
+# Species sets — CASE NORMALIZED (toupper) to fix Acaca/ACACA mismatch
 gene_sets <- list()
 for (sp in SPECIES) {
-  gene_sets[[sp]] <- presence$gene_name[presence[[sp]] == TRUE]
+  raw_genes <- presence$gene_name[presence[[sp]] == TRUE]
+  gene_sets[[sp]] <- unique(toupper(raw_genes))
+  n_merged <- length(raw_genes) - length(gene_sets[[sp]])
+  cat(sprintf("  %s: %d genes (merged %d by toupper)\n", sp, length(gene_sets[[sp]]), n_merged))
 }
+
+# Verify ACACA fix
+cat("\n  ACACA present:")
+for (sp in SPECIES) cat(sprintf(" %s=%s", sp, "ACACA" %in% gene_sets[[sp]]))
+cat("\n")
 
 # ---- Okabe-Ito species colors ----
 sp_colors <- c(
