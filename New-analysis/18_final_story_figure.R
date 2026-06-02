@@ -61,31 +61,34 @@ has_acaca <- sapply(comb_genes_all, function(g) "ACACA" %in% g)
 bar_labels <- comb_size(comb_top12)
 bar_labels[has_acaca] <- paste0(bar_labels[has_acaca], " \U2605")
 
-pdf("New-analysis/figures/upset_top12.pdf", width = 12, height = 5.5)
+pdf("New-analysis/figures/upset_top12.pdf", width = 12, height = 6)
 htA <- UpSet(
   comb_top12,
   set_order = rev(set_names),
   comb_order = order(comb_size(comb_top12), decreasing = TRUE),
+  pt_size = unit(4, "mm"),
+  lwd = 2,
   top_annotation = HeatmapAnnotation(
     "Shared genes" = anno_barplot(
       comb_size(comb_top12),
       border = FALSE,
-      gp = gpar(fill = bar_cols, col = bar_cols),
-      height = unit(7, "cm"),
-      axis_param = list(labels_rot = 0)
+      gp = gpar(fill = bar_cols, col = bar_cols, lwd = 1.5),
+      height = unit(7.5, "cm"),
+      axis_param = list(labels_rot = 0, gp = gpar(fontsize = 11))
     ),
     annotation_name_side = "left",
-    annotation_name_gp = gpar(fontsize = 9)
+    annotation_name_gp = gpar(fontsize = 13, fontface = "bold")
   ),
   right_annotation = upset_right_annotation(
     comb_top12,
     gp = gpar(fill = sp_colors[set_names]),
-    annotation_name_gp = gpar(fontsize = 8),
-    axis_param = list(labels_rot = 0)
+    annotation_name_gp = gpar(fontsize = 12, fontface = "bold"),
+    axis_param = list(labels_rot = 0),
+    width = unit(4, "cm")
   ),
-  row_names_gp = gpar(fontsize = 7),
+  row_names_gp = gpar(fontsize = 12, fontface = "bold"),
   column_title = "circRNA host gene conservation (≥3 species)",
-  column_title_gp = gpar(fontsize = 12, fontface = "bold")
+  column_title_gp = gpar(fontsize = 14, fontface = "bold")
 )
 draw(htA)
 # Legend
@@ -95,8 +98,8 @@ lgd <- Legend(
   type = c(rep("grid", 4), "points"),
   pch = c(NA, NA, NA, NA, 8),
   title = "Level",
-  title_gp = gpar(fontsize = 9, fontface = "bold"),
-  labels_gp = gpar(fontsize = 8)
+  title_gp = gpar(fontsize = 11, fontface = "bold"),
+  labels_gp = gpar(fontsize = 10)
 )
 draw(lgd, x = unit(0.78, "npc"), y = unit(0.88, "npc"))
 dev.off()
