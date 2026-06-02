@@ -19,6 +19,18 @@ tools/
 old/
 re_analysis/
 
+# Large annotation files (>50MB, stored separately)
+bat_annotation/*.gtf
+bat_annotation/*.gff3
+mfu.gff3
+mpi.gff3
+mpi.gtf
+mpi.gff.csv
+mpi_raw.txt
+
+# Reference proteomes (large, download from Ensembl)
+New-analysis/blast/*_reference_proteins.faa
+
 # BLAST intermediate output (binary/text, kept in New-analysis/blast/)
 New-analysis/blast/all_ref_db.*
 New-analysis/blast/all_reference_proteins.faa
