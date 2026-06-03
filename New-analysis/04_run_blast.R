@@ -7,11 +7,11 @@
 
 library(dplyr)
 
-setwd("D:/跨物种筛选保守circRNA")
+source(if (file.exists("New-analysis/00_project_setup.R")) "New-analysis/00_project_setup.R" else "00_project_setup.R", encoding = "UTF-8")
 
 BLAST_BIN <- "tools/ncbi-blast-2.17.0+/bin"
 BLAST_DIR <- "New-analysis/blast"
-BLAST_DB   <- "D:/blast_work/all_ref_db"   # Use ASCII path (no Chinese chars)
+BLAST_DB   <- file.path(BLAST_DIR, "all_ref_db")
 
 # ---- Step 1: Run BLASTp ----
 cat("========== Running BLASTp ==========\n")

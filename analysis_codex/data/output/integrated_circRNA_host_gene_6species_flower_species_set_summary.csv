@@ -1,0 +1,7 @@
+species,species_label,set_size,contains_ACACA
+hsa,Human (hsa),26644,True
+mma,Rhesus (mma),15644,True
+mmu,Mouse (mmu),17030,True
+mfu,Long-winged bat (mfu),3160,True
+mpi,Big-footed bat (mpi),2275,True
+rsi,Horseshoe bat (rsi),1500,True

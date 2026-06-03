@@ -11,7 +11,7 @@ library(rtracklayer)
 library(dplyr)
 library(tidyr)
 
-setwd("D:/跨物种筛选保守circRNA")
+source(if (file.exists("New-analysis/00_project_setup.R")) "New-analysis/00_project_setup.R" else "00_project_setup.R", encoding = "UTF-8")
 dir.create("New-analysis", showWarnings = FALSE)
 dir.create("New-analysis/blast", showWarnings = FALSE)
 

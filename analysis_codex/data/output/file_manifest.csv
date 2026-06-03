@@ -1,0 +1,17 @@
+type,source,copied_to,size_bytes
+input_data,New-analysis\acaca_final_evidence.csv,analysis_codex\data\input_used\acaca_final_evidence.csv,432
+input_data,New-analysis\acaca_evidence_matrix.csv,analysis_codex\data\input_used\acaca_evidence_matrix.csv,535
+input_data,New-analysis\gene_presence_matrix.csv,analysis_codex\data\input_used\gene_presence_matrix.csv,234805
+input_data,New-analysis\conserved_genes_3way.csv,analysis_codex\data\input_used\conserved_genes_3way.csv,110875
+input_data,ce_mmu.csv,analysis_codex\data\input_used\ce_mmu.csv,273413
+input_data,cq_mmu.csv,analysis_codex\data\input_used\cq_mmu.csv,489791
+input_data,fc_mmu.csv,analysis_codex\data\input_used\fc_mmu.csv,254037
+input_data,circAtlas_circRNA\human_bed_v3.0.txt,analysis_codex\data\input_used\human_bed_v3.0.txt,32223175
+input_data,circAtlas_circRNA\macaca_bed_v3.0.txt,analysis_codex\data\input_used\macaca_bed_v3.0.txt,22706953
+input_data,circAtlas_circRNA\mouse_bed_v3.0.txt,analysis_codex\data\input_used\mouse_bed_v3.0.txt,12207716
+source_script_used,New-analysis\05_conservation_analysis_part1.R,analysis_codex\source_existing\scripts\05_conservation_analysis_part1.R,5314
+source_script_used,New-analysis\06_conservation_analysis_part2.R,analysis_codex\source_existing\scripts\06_conservation_analysis_part2.R,4467
+source_script_used,New-analysis\11_acaca_gene_level_analysis.R,analysis_codex\source_existing\scripts\11_acaca_gene_level_analysis.R,11739
+source_script_used,New-analysis\12_final_circAcc1_evidence.R,analysis_codex\source_existing\scripts\12_final_circAcc1_evidence.R,7992
+source_script_used,New-analysis\18_final_story_figure.R,analysis_codex\source_existing\scripts\18_final_story_figure.R,10950
+source_script_used,New-analysis\00_project_setup.R,analysis_codex\source_existing\scripts\00_project_setup.R,905

@@ -5,7 +5,7 @@
 
 library(dplyr)
 
-setwd("D:/跨物种筛选保守circRNA")
+source(if (file.exists("New-analysis/00_project_setup.R")) "New-analysis/00_project_setup.R" else "00_project_setup.R", encoding = "UTF-8")
 
 cat("========== Diagnosing missing circACACA in hsa & mma ==========\n\n")
 

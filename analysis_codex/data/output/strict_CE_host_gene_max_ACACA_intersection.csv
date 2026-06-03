@@ -1,0 +1,5 @@
+k,species_combo,intersection_gene_count,contains_ACACA
+3,mmu;mpi;rsi,326,True
+2,mpi;rsi,703,True
+2,mmu;mpi,555,True
+2,mmu;rsi,476,True

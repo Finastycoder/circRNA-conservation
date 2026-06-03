@@ -1,0 +1,4 @@
+species,species_label,source_file,circAtlas_ACACA_count,example_ids
+hsa,Human (hsa),circAtlas_circRNA\human_bed_v3.0.txt,317,hsa-ACACA_0013;hsa-ACACA_0295;hsa-ACACA_0024
+mma,Rhesus (mma),circAtlas_circRNA\macaca_bed_v3.0.txt,92,mma-ACACA_0050;mma-ACACA_0015;mma-ACACA_0047
+mmu,Mouse (mmu),circAtlas_circRNA\mouse_bed_v3.0.txt,56,mmu-Acaca_0005;mmu-Acaca_0014;mmu-Acaca_0027

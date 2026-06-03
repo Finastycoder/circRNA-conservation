@@ -6,7 +6,7 @@
 library(Biostrings)
 library(dplyr)
 
-setwd("D:/跨物种筛选保守circRNA")
+source(if (file.exists("New-analysis/00_project_setup.R")) "New-analysis/00_project_setup.R" else "00_project_setup.R", encoding = "UTF-8")
 
 # ---- Load novel gene lists ----
 mfu_novel <- read.csv("New-analysis/mfu_novel_gene_list.csv", stringsAsFactors = FALSE)

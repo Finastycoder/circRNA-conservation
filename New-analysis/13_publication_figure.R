@@ -48,7 +48,7 @@ sp_colors <- c(
   "H. bat (rsi)"     = okabe_ito[7]
 )
 
-setwd("D:/跨物种筛选保守circRNA")
+source(if (file.exists("New-analysis/00_project_setup.R")) "New-analysis/00_project_setup.R" else "00_project_setup.R", encoding = "UTF-8")
 dir.create("New-analysis/figures", showWarnings = FALSE, recursive = TRUE)
 
 # ---- Prepare data ----

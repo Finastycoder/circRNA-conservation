@@ -2,7 +2,7 @@
 # Update all evidence CSVs with case-normalized data
 # ============================================================
 
-setwd("D:/跨物种筛选保守circRNA")
+source(if (file.exists("New-analysis/00_project_setup.R")) "New-analysis/00_project_setup.R" else "00_project_setup.R", encoding = "UTF-8")
 
 # 1. Update acaca_evidence_matrix.csv
 evidence <- read.csv("New-analysis/acaca_evidence_matrix.csv", stringsAsFactors = FALSE)

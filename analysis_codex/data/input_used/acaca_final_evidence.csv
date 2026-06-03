@@ -1,0 +1,7 @@
+"species","s_label","category","gene_genome","mrna_expr","circ_milk","circ_n_iso","circ_atlas","circ_atlas_n"
+"hsa","Human (hsa)","Primate",TRUE,TRUE,FALSE,0,TRUE,317
+"mma","Rhesus (mma)","Primate",TRUE,TRUE,FALSE,0,TRUE,92
+"mmu","Mouse (mmu)","Rodent",TRUE,TRUE,TRUE,9,TRUE,56
+"mfu","L.bat (mfu)","Bat",TRUE,TRUE,TRUE,6,NA,NA
+"mpi","B.bat (mpi)","Bat",TRUE,TRUE,TRUE,1,NA,NA
+"rsi","H.bat (rsi)","Bat",TRUE,TRUE,TRUE,8,NA,NA

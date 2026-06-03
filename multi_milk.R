@@ -1,4 +1,12 @@
-wkdir <- setwd('H:/Data/11 Bioinformatic analysis/multi_milk')
+.script_file <- tryCatch(sys.frame(1)$ofile, error = function(e) NA_character_)
+if (is.null(.script_file) || !length(.script_file) || is.na(.script_file)) {
+  .file_arg <- grep("^--file=", commandArgs(FALSE), value = TRUE)
+  .script_file <- if (length(.file_arg)) sub("^--file=", "", .file_arg[1]) else NA_character_
+}
+if (!is.na(.script_file) && nzchar(.script_file)) {
+  setwd(dirname(normalizePath(.script_file, winslash = "/", mustWork = TRUE)))
+}
+wkdir <- getwd()
 
 # 读取本地数据 ------------------------------------------------------------------
 
@@ -6,7 +14,7 @@ library(dplyr)
 #读取上游分析的原始数据
 #读取find_circ结果
 #物种：hsa
-fc_hsa1 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/hsa/find_circ/hsa1.candidates.bed',
+fc_hsa1 <- read.table('re_analysis/hsa/find_circ/hsa1.candidates.bed',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','n_reads','strand','n_uniq','uniq_bridges',
@@ -15,7 +23,7 @@ fc_hsa1 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/
 write.csv(fc_hsa1, 'fc_hsa1.csv')
 fc_hsa1 <- fc_hsa1 %>% mutate(circ_id=paste(chrom, ':', start, '|', end, sep = ''))  #提取染色体位置作为circ_id产生新的列
 fc_hsa1 <- fc_hsa1 %>% select(circ_id, hsa1 = n_reads)  #提取circ_id和n_reads列作为表达矩阵
-fc_hsa2 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/hsa/find_circ/hsa2.candidates.bed',
+fc_hsa2 <- read.table('re_analysis/hsa/find_circ/hsa2.candidates.bed',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','n_reads','strand','n_uniq','uniq_bridges',
@@ -24,7 +32,7 @@ fc_hsa2 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/
 write.csv(fc_hsa2, 'fc_hsa2.csv')
 fc_hsa2 <- fc_hsa2 %>% mutate(circ_id=paste(chrom, ':', start, '|', end, sep = ''))
 fc_hsa2 <- fc_hsa2 %>% select(circ_id, hsa2 = n_reads)
-fc_hsa3 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/hsa/find_circ/hsa3.candidates.bed',
+fc_hsa3 <- read.table('re_analysis/hsa/find_circ/hsa3.candidates.bed',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','n_reads','strand','n_uniq','uniq_bridges',
@@ -38,7 +46,7 @@ fc_hsa <- merge(fc_hsa, fc_hsa3, by = 'circ_id', all = T)  #将3个生物学重�
 fc_hsa <- fc_hsa[!duplicated(fc_hsa$circ_id),]  #以circ_id为标准去重
 write.csv(fc_hsa, 'fc_hsa.csv')  #输出表达矩阵
 #物种：mfu
-fc_mfu1 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mfu/find_circ/mfu1.candidates.bed',
+fc_mfu1 <- read.table('re_analysis/mfu/find_circ/mfu1.candidates.bed',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','n_reads','strand','n_uniq','uniq_bridges',
@@ -47,7 +55,7 @@ fc_mfu1 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/
 write.csv(fc_mfu1, 'fc_mfu1.csv')
 fc_mfu1 <- fc_mfu1 %>% mutate(circ_id=paste(chrom, ':', start, '|', end, sep = ''))
 fc_mfu1 <- fc_mfu1 %>% select(circ_id, mfu1 = n_reads)
-fc_mfu2 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mfu/find_circ/mfu2.candidates.bed',
+fc_mfu2 <- read.table('re_analysis/mfu/find_circ/mfu2.candidates.bed',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','n_reads','strand','n_uniq','uniq_bridges',
@@ -56,7 +64,7 @@ fc_mfu2 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/
 write.csv(fc_mfu2, 'fc_mfu2.csv')
 fc_mfu2 <- fc_mfu2 %>% mutate(circ_id=paste(chrom, ':', start, '|', end, sep = ''))
 fc_mfu2 <- fc_mfu2 %>% select(circ_id, mfu2 = n_reads)
-fc_mfu3 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mfu/find_circ/mfu3.candidates.bed',
+fc_mfu3 <- read.table('re_analysis/mfu/find_circ/mfu3.candidates.bed',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','n_reads','strand','n_uniq','uniq_bridges',
@@ -70,7 +78,7 @@ fc_mfu <- merge(fc_mfu, fc_mfu3, by = 'circ_id', all = T)
 fc_mfu <- fc_mfu[!duplicated(fc_mfu$circ_id),]  
 write.csv(fc_mfu, 'fc_mfu.csv')
 #物种：mma
-fc_mma1 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mma/find_circ/mma1.candidates.bed',
+fc_mma1 <- read.table('re_analysis/mma/find_circ/mma1.candidates.bed',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','n_reads','strand','n_uniq','uniq_bridges',
@@ -79,7 +87,7 @@ fc_mma1 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/
 write.csv(fc_mma1, 'fc_mma1.csv')
 fc_mma1 <- fc_mma1 %>% mutate(circ_id=paste(chrom, ':', start, '|', end, sep = ''))
 fc_mma1 <- fc_mma1 %>% select(circ_id, mma1 = n_reads)
-fc_mma2 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mma/find_circ/mma2.candidates.bed',
+fc_mma2 <- read.table('re_analysis/mma/find_circ/mma2.candidates.bed',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','n_reads','strand','n_uniq','uniq_bridges',
@@ -88,7 +96,7 @@ fc_mma2 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/
 write.csv(fc_mma2, 'fc_mma2.csv')
 fc_mma2 <- fc_mma2 %>% mutate(circ_id=paste(chrom, ':', start, '|', end, sep = ''))
 fc_mma2 <- fc_mma2 %>% select(circ_id, mma2 = n_reads)
-fc_mma3 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mma/find_circ/mma3.candidates.bed',
+fc_mma3 <- read.table('re_analysis/mma/find_circ/mma3.candidates.bed',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','n_reads','strand','n_uniq','uniq_bridges',
@@ -102,7 +110,7 @@ fc_mma <- merge(fc_mma, fc_mma3, by = 'circ_id', all = T)
 fc_mma <- fc_mma[!duplicated(fc_mma$circ_id),]  
 write.csv(fc_mma, 'fc_mma.csv')
 #物种：mmu
-fc_mmu1 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mmu/find_circ/mmu1.candidates.bed',
+fc_mmu1 <- read.table('re_analysis/mmu/find_circ/mmu1.candidates.bed',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','n_reads','strand','n_uniq','uniq_bridges',
@@ -111,7 +119,7 @@ fc_mmu1 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/
 write.csv(fc_mmu1, 'fc_mmu1.csv')
 fc_mmu1 <- fc_mmu1 %>% mutate(circ_id=paste(chrom, ':', start, '|', end, sep = ''))
 fc_mmu1 <- fc_mmu1 %>% select(circ_id, mmu1 = n_reads)
-fc_mmu2 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mmu/find_circ/mmu2.candidates.bed',
+fc_mmu2 <- read.table('re_analysis/mmu/find_circ/mmu2.candidates.bed',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','n_reads','strand','n_uniq','uniq_bridges',
@@ -120,7 +128,7 @@ fc_mmu2 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/
 write.csv(fc_mmu2, 'fc_mmu2.csv')
 fc_mmu2 <- fc_mmu2 %>% mutate(circ_id=paste(chrom, ':', start, '|', end, sep = ''))
 fc_mmu2 <- fc_mmu2 %>% select(circ_id, mmu2 = n_reads)
-fc_mmu3 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mmu/find_circ/mmu3.candidates.bed',
+fc_mmu3 <- read.table('re_analysis/mmu/find_circ/mmu3.candidates.bed',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','n_reads','strand','n_uniq','uniq_bridges',
@@ -134,7 +142,7 @@ fc_mmu <- merge(fc_mmu, fc_mmu3, by = 'circ_id', all = T)
 fc_mmu <- fc_mmu[!duplicated(fc_mmu$circ_id),]  
 write.csv(fc_mmu, 'fc_mmu.csv')
 #物种：mpi
-fc_mpi1 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mpi/find_circ/mpi1.candidates.bed',
+fc_mpi1 <- read.table('re_analysis/mpi/find_circ/mpi1.candidates.bed',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','n_reads','strand','n_uniq','uniq_bridges',
@@ -143,7 +151,7 @@ fc_mpi1 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/
 write.csv(fc_mpi1, 'fc_mpi1.csv')
 fc_mpi1 <- fc_mpi1 %>% mutate(circ_id=paste(chrom, ':', start, '|', end, sep = ''))
 fc_mpi1 <- fc_mpi1 %>% select(circ_id, mpi1 = n_reads)
-fc_mpi2 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mpi/find_circ/mpi2.candidates.bed',
+fc_mpi2 <- read.table('re_analysis/mpi/find_circ/mpi2.candidates.bed',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','n_reads','strand','n_uniq','uniq_bridges',
@@ -152,7 +160,7 @@ fc_mpi2 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/
 write.csv(fc_mpi2, 'fc_mpi2.csv')
 fc_mpi2 <- fc_mpi2 %>% mutate(circ_id=paste(chrom, ':', start, '|', end, sep = ''))
 fc_mpi2 <- fc_mpi2 %>% select(circ_id, mpi2 = n_reads)
-fc_mpi3 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mpi/find_circ/mpi3.candidates.bed',
+fc_mpi3 <- read.table('re_analysis/mpi/find_circ/mpi3.candidates.bed',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','n_reads','strand','n_uniq','uniq_bridges',
@@ -166,7 +174,7 @@ fc_mpi <- merge(fc_mpi, fc_mpi3, by = 'circ_id', all = F)
 fc_mpi <- fc_mpi[!duplicated(fc_mpi$circ_id),]  
 write.csv(fc_mpi, 'fc_mpi.csv')
 #物种：rsi
-fc_rsi1 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/rsi/find_circ/rsi1.candidates.bed',
+fc_rsi1 <- read.table('re_analysis/rsi/find_circ/rsi1.candidates.bed',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','n_reads','strand','n_uniq','uniq_bridges',
@@ -175,7 +183,7 @@ fc_rsi1 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/
 write.csv(fc_rsi1, 'fc_rsi1.csv')
 fc_rsi1 <- fc_rsi1 %>% mutate(circ_id=paste(chrom, ':', start, '|', end, sep = ''))
 fc_rsi1 <- fc_rsi1 %>% select(circ_id, rsi1 = n_reads)
-fc_rsi2 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/rsi/find_circ/rsi2.candidates.bed',
+fc_rsi2 <- read.table('re_analysis/rsi/find_circ/rsi2.candidates.bed',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','n_reads','strand','n_uniq','uniq_bridges',
@@ -184,7 +192,7 @@ fc_rsi2 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/
 write.csv(fc_rsi2, 'fc_rsi2.csv')
 fc_rsi2 <- fc_rsi2 %>% mutate(circ_id=paste(chrom, ':', start, '|', end, sep = ''))
 fc_rsi2 <- fc_rsi2 %>% select(circ_id, rsi2 = n_reads)
-fc_rsi3 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/rsi/find_circ/rsi3.candidates.bed',
+fc_rsi3 <- read.table('re_analysis/rsi/find_circ/rsi3.candidates.bed',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','n_reads','strand','n_uniq','uniq_bridges',
@@ -193,7 +201,7 @@ fc_rsi3 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/
 write.csv(fc_rsi3, 'fc_rsi3.csv')
 fc_rsi3 <- fc_rsi3 %>% mutate(circ_id=paste(chrom, ':', start, '|', end, sep = ''))
 fc_rsi3 <- fc_rsi3 %>% select(circ_id, rsi3 = n_reads)
-fc_rsi4 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/rsi/find_circ/rsi4.candidates.bed',
+fc_rsi4 <- read.table('re_analysis/rsi/find_circ/rsi4.candidates.bed',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','n_reads','strand','n_uniq','uniq_bridges',
@@ -211,17 +219,17 @@ write.csv(fc_rsi, 'fc_rsi.csv')
 #在CIRIquant分析的结果中，染色体location的Start比其他两种分析方法的得到多1，因此需要用start=start - 1，把多的1减掉，才能与其他两种分析方法联合分析
 #物种：hsa
 library(rtracklayer)
-cq_hsa1 <- import('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/hsa/CIRIquant/hsa1.gtf')
+cq_hsa1 <- import('re_analysis/hsa/CIRIquant/hsa1.gtf')
 cq_hsa1 <- as.data.frame(cq_hsa1)
 write.csv(cq_hsa1, 'cq_hsa1.csv')
 cq_hsa1 <- cq_hsa1 %>% mutate(start = start - 1, circ_ID=paste(seqnames, ':', start, '|', end, sep = ''))
 cq_hsa1 <- cq_hsa1 %>% select(circ_id = circ_ID, hsa1 = bsj)
-cq_hsa2 <- import('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/hsa/CIRIquant/hsa2.gtf')
+cq_hsa2 <- import('re_analysis/hsa/CIRIquant/hsa2.gtf')
 cq_hsa2 <- as.data.frame(cq_hsa2)
 write.csv(cq_hsa2, 'cq_hsa2.csv')
 cq_hsa2 <- cq_hsa2 %>% mutate(start = start - 1, circ_ID=paste(seqnames, ':', start, '|', end, sep = ''))
 cq_hsa2 <- cq_hsa2 %>% select(circ_id = circ_ID, hsa2 = bsj)
-cq_hsa3 <- import('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/hsa/CIRIquant/hsa3.gtf')
+cq_hsa3 <- import('re_analysis/hsa/CIRIquant/hsa3.gtf')
 cq_hsa3 <- as.data.frame(cq_hsa3)
 write.csv(cq_hsa3, 'cq_hsa3.csv')
 cq_hsa3 <- cq_hsa3 %>% mutate(start = start - 1, circ_ID=paste(seqnames, ':', start, '|', end, sep = ''))
@@ -232,17 +240,17 @@ cq_hsa <- cq_hsa[!duplicated(cq_hsa$circ_id),]
 write.csv(cq_hsa, 'cq_hsa.csv')
 #物种：mfu
 library(rtracklayer)
-cq_mfu1 <- import('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mfu/CIRIquant/mfu1.gtf')
+cq_mfu1 <- import('re_analysis/mfu/CIRIquant/mfu1.gtf')
 cq_mfu1 <- as.data.frame(cq_mfu1)
 write.csv(cq_mfu1, 'cq_mfu1.csv')
 cq_mfu1 <- cq_mfu1 %>% mutate(start = start - 1, circ_ID=paste(seqnames, ':', start, '|', end, sep = ''))
 cq_mfu1 <- cq_mfu1 %>% select(circ_id = circ_ID, mfu1 = bsj)
-cq_mfu2 <- import('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mfu/CIRIquant/mfu2.gtf')
+cq_mfu2 <- import('re_analysis/mfu/CIRIquant/mfu2.gtf')
 cq_mfu2 <- as.data.frame(cq_mfu2)
 write.csv(cq_mfu2, 'cq_mfu2.csv')
 cq_mfu2 <- cq_mfu2 %>% mutate(start = start - 1, circ_ID=paste(seqnames, ':', start, '|', end, sep = ''))
 cq_mfu2 <- cq_mfu2 %>% select(circ_id = circ_ID, mfu2 = bsj)
-cq_mfu3 <- import('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mfu/CIRIquant/mfu3.gtf')
+cq_mfu3 <- import('re_analysis/mfu/CIRIquant/mfu3.gtf')
 cq_mfu3 <- as.data.frame(cq_mfu3)
 write.csv(cq_mfu3, 'cq_mfu3.csv')
 cq_mfu3 <- cq_mfu3 %>% mutate(start = start - 1, circ_ID=paste(seqnames, ':', start, '|', end, sep = ''))
@@ -253,17 +261,17 @@ cq_mfu <- cq_mfu[!duplicated(cq_mfu$circ_id),]
 write.csv(cq_mfu, 'cq_mfu.csv')
 #物种：mma
 library(rtracklayer)
-cq_mma1 <- import('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mma/CIRIquant/mma1.gtf')
+cq_mma1 <- import('re_analysis/mma/CIRIquant/mma1.gtf')
 cq_mma1 <- as.data.frame(cq_mma1)
 write.csv(cq_mma1, 'cq_mma1.csv')
 cq_mma1 <- cq_mma1 %>% mutate(start = start - 1, circ_ID=paste(seqnames, ':', start, '|', end, sep = ''))
 cq_mma1 <- cq_mma1 %>% select(circ_id = circ_ID, mma1 = bsj)
-cq_mma2 <- import('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mma/CIRIquant/mma2.gtf')
+cq_mma2 <- import('re_analysis/mma/CIRIquant/mma2.gtf')
 cq_mma2 <- as.data.frame(cq_mma2)
 write.csv(cq_mma2, 'cq_mma2.csv')
 cq_mma2 <- cq_mma2 %>% mutate(start = start - 1, circ_ID=paste(seqnames, ':', start, '|', end, sep = ''))
 cq_mma2 <- cq_mma2 %>% select(circ_id = circ_ID, mma2 = bsj)
-cq_mma3 <- import('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mma/CIRIquant/mma3.gtf')
+cq_mma3 <- import('re_analysis/mma/CIRIquant/mma3.gtf')
 cq_mma3 <- as.data.frame(cq_mma3)
 write.csv(cq_mma3, 'cq_mma3.csv')
 cq_mma3 <- cq_mma3 %>% mutate(start = start - 1, circ_ID=paste(seqnames, ':', start, '|', end, sep = ''))
@@ -274,17 +282,17 @@ cq_mma <- cq_mma[!duplicated(cq_mma$circ_id),]
 write.csv(cq_mma, 'cq_mma.csv')
 #物种：mmu
 library(rtracklayer)
-cq_mmu1 <- import('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mmu/CIRIquant/mmu1.gtf')
+cq_mmu1 <- import('re_analysis/mmu/CIRIquant/mmu1.gtf')
 cq_mmu1 <- as.data.frame(cq_mmu1)
 write.csv(cq_mmu1, 'cq_mmu1.csv')
 cq_mmu1 <- cq_mmu1 %>% mutate(start = start - 1, circ_ID=paste(seqnames, ':', start, '|', end, sep = ''))
 cq_mmu1 <- cq_mmu1 %>% select(circ_id = circ_ID, mmu1 = bsj)
-cq_mmu2 <- import('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mmu/CIRIquant/mmu2.gtf')
+cq_mmu2 <- import('re_analysis/mmu/CIRIquant/mmu2.gtf')
 cq_mmu2 <- as.data.frame(cq_mmu2)
 write.csv(cq_mmu2, 'cq_mmu2.csv')
 cq_mmu2 <- cq_mmu2 %>% mutate(start = start - 1, circ_ID=paste(seqnames, ':', start, '|', end, sep = ''))
 cq_mmu2 <- cq_mmu2 %>% select(circ_id = circ_ID, mmu2 = bsj)
-cq_mmu3 <- import('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mmu/CIRIquant/mmu3.gtf')
+cq_mmu3 <- import('re_analysis/mmu/CIRIquant/mmu3.gtf')
 cq_mmu3 <- as.data.frame(cq_mmu3)
 write.csv(cq_mmu3, 'cq_mmu3.csv')
 cq_mmu3 <- cq_mmu3 %>% mutate(start = start - 1, circ_ID=paste(seqnames, ':', start, '|', end, sep = ''))
@@ -295,17 +303,17 @@ cq_mmu <- cq_mmu[!duplicated(cq_mmu$circ_id),]
 write.csv(cq_mmu, 'cq_mmu.csv')
 #物种：mpi
 library(rtracklayer)
-cq_mpi1 <- import('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mpi/CIRIquant/mpi1.gtf')
+cq_mpi1 <- import('re_analysis/mpi/CIRIquant/mpi1.gtf')
 cq_mpi1 <- as.data.frame(cq_mpi1)
 write.csv(cq_mpi1, 'cq_mpi1.csv')
 cq_mpi1 <- cq_mpi1 %>% mutate(start = start - 1, circ_ID=paste(seqnames, ':', start, '|', end, sep = ''))
 cq_mpi1 <- cq_mpi1 %>% select(circ_id = circ_ID, mpi1 = bsj)
-cq_mpi2 <- import('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mpi/CIRIquant/mpi2.gtf')
+cq_mpi2 <- import('re_analysis/mpi/CIRIquant/mpi2.gtf')
 cq_mpi2 <- as.data.frame(cq_mpi2)
 write.csv(cq_mpi2, 'cq_mpi2.csv')
 cq_mpi2 <- cq_mpi2 %>% mutate(start = start - 1, circ_ID=paste(seqnames, ':', start, '|', end, sep = ''))
 cq_mpi2 <- cq_mpi2 %>% select(circ_id = circ_ID, mpi2 = bsj)
-cq_mpi3 <- import('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mpi/CIRIquant/mpi3.gtf')
+cq_mpi3 <- import('re_analysis/mpi/CIRIquant/mpi3.gtf')
 cq_mpi3 <- as.data.frame(cq_mpi3)
 write.csv(cq_mpi3, 'cq_mpi3.csv')
 cq_mpi3 <- cq_mpi3 %>% mutate(start = start - 1, circ_ID=paste(seqnames, ':', start, '|', end, sep = ''))
@@ -316,22 +324,22 @@ cq_mpi <- cq_mpi[!duplicated(cq_mpi$circ_id),]
 write.csv(cq_mpi, 'cq_mpi.csv')
 #物种：rsi
 library(rtracklayer)
-cq_rsi1 <- import('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/rsi/CIRIquant/rsi1.gtf')
+cq_rsi1 <- import('re_analysis/rsi/CIRIquant/rsi1.gtf')
 cq_rsi1 <- as.data.frame(cq_rsi1)
 write.csv(cq_rsi1, 'cq_rsi1.csv')
 cq_rsi1 <- cq_rsi1 %>% mutate(start = start - 1, circ_ID=paste(seqnames, ':', start, '|', end, sep = ''))
 cq_rsi1 <- cq_rsi1 %>% select(circ_id = circ_ID, rsi1 = bsj)
-cq_rsi2 <- import('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/rsi/CIRIquant/rsi2.gtf')
+cq_rsi2 <- import('re_analysis/rsi/CIRIquant/rsi2.gtf')
 cq_rsi2 <- as.data.frame(cq_rsi2)
 write.csv(cq_rsi2, 'cq_rsi2.csv')
 cq_rsi2 <- cq_rsi2 %>% mutate(start = start - 1, circ_ID=paste(seqnames, ':', start, '|', end, sep = ''))
 cq_rsi2 <- cq_rsi2 %>% select(circ_id = circ_ID, rsi2 = bsj)
-cq_rsi3 <- import('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/rsi/CIRIquant/rsi3.gtf')
+cq_rsi3 <- import('re_analysis/rsi/CIRIquant/rsi3.gtf')
 cq_rsi3 <- as.data.frame(cq_rsi3)
 write.csv(cq_rsi3, 'cq_rsi3.csv')
 cq_rsi3 <- cq_rsi3 %>% mutate(start = start - 1, circ_ID=paste(seqnames, ':', start, '|', end, sep = ''))
 cq_rsi3 <- cq_rsi3 %>% select(circ_id = circ_ID, rsi3 = bsj)
-cq_rsi4 <- import('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/rsi/CIRIquant/rsi4.gtf')
+cq_rsi4 <- import('re_analysis/rsi/CIRIquant/rsi4.gtf')
 cq_rsi4 <- as.data.frame(cq_rsi4)
 write.csv(cq_rsi4, 'cq_rsi4.csv')
 cq_rsi4 <- cq_rsi4 %>% mutate(start = start - 1, circ_ID=paste(seqnames, ':', start, '|', end, sep = ''))
@@ -343,7 +351,7 @@ cq_rsi <- cq_rsi[!duplicated(cq_rsi$circ_id),]
 write.csv(cq_rsi, 'cq_rsi.csv')
 #读取CIRCexplorer3结果
 #物种：hsa
-ce_hsa1 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/hsa/CIRCexplorer3/hsa1.txt',
+ce_hsa1 <- read.table('re_analysis/hsa/CIRCexplorer3/hsa1.txt',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','score','strand','thickStart','thickEnd','itemRgb',
@@ -352,7 +360,7 @@ ce_hsa1 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/
 write.csv(ce_hsa1, 'ce_hsa1.csv')
 ce_hsa1 <- ce_hsa1 %>% mutate(circ_id=paste(chrom, ':', start, '|', end, sep = ''))
 ce_hsa1 <- ce_hsa1 %>% select(circ_id, hsa1 = readNumber)
-ce_hsa2 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/hsa/CIRCexplorer3/hsa2.txt',
+ce_hsa2 <- read.table('re_analysis/hsa/CIRCexplorer3/hsa2.txt',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','score','strand','thickStart','thickEnd','itemRgb',
@@ -361,7 +369,7 @@ ce_hsa2 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/
 write.csv(ce_hsa2, 'ce_hsa2.csv')
 ce_hsa2 <- ce_hsa2 %>% mutate(circ_id=paste(chrom, ':', start, '|', end, sep = ''))
 ce_hsa2 <- ce_hsa2 %>% select(circ_id, hsa2 = readNumber)
-ce_hsa3 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/hsa/CIRCexplorer3/hsa3.txt',
+ce_hsa3 <- read.table('re_analysis/hsa/CIRCexplorer3/hsa3.txt',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','score','strand','thickStart','thickEnd','itemRgb',
@@ -375,7 +383,7 @@ ce_hsa <- merge(ce_hsa, ce_hsa3, by = 'circ_id', all = T)
 ce_hsa <- ce_hsa[!duplicated(ce_hsa$circ_id),]
 write.csv(ce_hsa, 'ce_hsa.csv')
 #物种：mfu
-ce_mfu1 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mfu/CIRCexplorer3/mfu1.txt',
+ce_mfu1 <- read.table('re_analysis/mfu/CIRCexplorer3/mfu1.txt',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','score','strand','thickStart','thickEnd','itemRgb',
@@ -384,7 +392,7 @@ ce_mfu1 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/
 write.csv(ce_mfu1, 'ce_mfu1.csv')
 ce_mfu1 <- ce_mfu1 %>% mutate(circ_id=paste(chrom, ':', start, '|', end, sep = ''))
 ce_mfu1 <- ce_mfu1 %>% select(circ_id, mfu1 = readNumber)
-ce_mfu2 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mfu/CIRCexplorer3/mfu2.txt',
+ce_mfu2 <- read.table('re_analysis/mfu/CIRCexplorer3/mfu2.txt',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','score','strand','thickStart','thickEnd','itemRgb',
@@ -393,7 +401,7 @@ ce_mfu2 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/
 write.csv(ce_mfu2, 'ce_mfu2.csv')
 ce_mfu2 <- ce_mfu2 %>% mutate(circ_id=paste(chrom, ':', start, '|', end, sep = ''))
 ce_mfu2 <- ce_mfu2 %>% select(circ_id, mfu2 = readNumber)
-ce_mfu3 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mfu/CIRCexplorer3/mfu3.txt',
+ce_mfu3 <- read.table('re_analysis/mfu/CIRCexplorer3/mfu3.txt',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','score','strand','thickStart','thickEnd','itemRgb',
@@ -407,7 +415,7 @@ ce_mfu <- merge(ce_mfu, ce_mfu3, by = 'circ_id', all = T)
 ce_mfu <- ce_mfu[!duplicated(ce_mfu$circ_id),]
 write.csv(ce_mfu, 'ce_mfu.csv')
 #物种：mma
-ce_mma1 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mma/CIRCexplorer3/mma1.txt',
+ce_mma1 <- read.table('re_analysis/mma/CIRCexplorer3/mma1.txt',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','score','strand','thickStart','thickEnd','itemRgb',
@@ -416,7 +424,7 @@ ce_mma1 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/
 write.csv(ce_mma1, 'ce_mma1.csv')
 ce_mma1 <- ce_mma1 %>% mutate(circ_id=paste(chrom, ':', start, '|', end, sep = ''))
 ce_mma1 <- ce_mma1 %>% select(circ_id, mma1 = readNumber)
-ce_mma2 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mma/CIRCexplorer3/mma2.txt',
+ce_mma2 <- read.table('re_analysis/mma/CIRCexplorer3/mma2.txt',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','score','strand','thickStart','thickEnd','itemRgb',
@@ -425,7 +433,7 @@ ce_mma2 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/
 write.csv(ce_mma2, 'ce_mma2.csv')
 ce_mma2 <- ce_mma2 %>% mutate(circ_id=paste(chrom, ':', start, '|', end, sep = ''))
 ce_mma2 <- ce_mma2 %>% select(circ_id, mma2 = readNumber)
-ce_mma3 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mma/CIRCexplorer3/mma3.txt',
+ce_mma3 <- read.table('re_analysis/mma/CIRCexplorer3/mma3.txt',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','score','strand','thickStart','thickEnd','itemRgb',
@@ -439,7 +447,7 @@ ce_mma <- merge(ce_mma, ce_mma3, by = 'circ_id', all = T)
 ce_mma <- ce_mma[!duplicated(ce_mma$circ_id),]
 write.csv(ce_mma, 'ce_mma.csv')
 #物种：mmu
-ce_mmu1 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mmu/CIRCexplorer3/mmu1.txt',
+ce_mmu1 <- read.table('re_analysis/mmu/CIRCexplorer3/mmu1.txt',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','score','strand','thickStart','thickEnd','itemRgb',
@@ -448,7 +456,7 @@ ce_mmu1 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/
 write.csv(ce_mmu1, 'ce_mmu1.csv')
 ce_mmu1 <- ce_mmu1 %>% mutate(circ_id=paste(chrom, ':', start, '|', end, sep = ''))
 ce_mmu1 <- ce_mmu1 %>% select(circ_id, mmu1 = readNumber)
-ce_mmu2 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mmu/CIRCexplorer3/mmu2.txt',
+ce_mmu2 <- read.table('re_analysis/mmu/CIRCexplorer3/mmu2.txt',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','score','strand','thickStart','thickEnd','itemRgb',
@@ -457,7 +465,7 @@ ce_mmu2 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/
 write.csv(ce_mmu2, 'ce_mmu2.csv')
 ce_mmu2 <- ce_mmu2 %>% mutate(circ_id=paste(chrom, ':', start, '|', end, sep = ''))
 ce_mmu2 <- ce_mmu2 %>% select(circ_id, mmu2 = readNumber)
-ce_mmu3 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mmu/CIRCexplorer3/mmu3.txt',
+ce_mmu3 <- read.table('re_analysis/mmu/CIRCexplorer3/mmu3.txt',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','score','strand','thickStart','thickEnd','itemRgb',
@@ -471,7 +479,7 @@ ce_mmu <- merge(ce_mmu, ce_mmu3, by = 'circ_id', all = T)
 ce_mmu <- ce_mmu[!duplicated(ce_mmu$circ_id),]
 write.csv(ce_mmu, 'ce_mmu.csv')
 #物种：mpi
-ce_mpi1 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mpi/CIRCexplorer3/mpi1.txt',
+ce_mpi1 <- read.table('re_analysis/mpi/CIRCexplorer3/mpi1.txt',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','score','strand','thickStart','thickEnd','itemRgb',
@@ -480,7 +488,7 @@ ce_mpi1 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/
 write.csv(ce_mpi1, 'ce_mpi1.csv')
 ce_mpi1 <- ce_mpi1 %>% mutate(circ_id=paste(chrom, ':', start, '|', end, sep = ''))
 ce_mpi1 <- ce_mpi1 %>% select(circ_id, mpi1 = readNumber)
-ce_mpi2 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mpi/CIRCexplorer3/mpi2.txt',
+ce_mpi2 <- read.table('re_analysis/mpi/CIRCexplorer3/mpi2.txt',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','score','strand','thickStart','thickEnd','itemRgb',
@@ -489,7 +497,7 @@ ce_mpi2 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/
 write.csv(ce_mpi2, 'ce_mpi2.csv')
 ce_mpi2 <- ce_mpi2 %>% mutate(circ_id=paste(chrom, ':', start, '|', end, sep = ''))
 ce_mpi2 <- ce_mpi2 %>% select(circ_id, mpi2 = readNumber)
-ce_mpi3 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/mpi/CIRCexplorer3/mpi3.txt',
+ce_mpi3 <- read.table('re_analysis/mpi/CIRCexplorer3/mpi3.txt',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','score','strand','thickStart','thickEnd','itemRgb',
@@ -503,7 +511,7 @@ ce_mpi <- merge(ce_mpi, ce_mpi3, by = 'circ_id', all = F)
 ce_mpi <- ce_mpi[!duplicated(ce_mpi$circ_id),]
 write.csv(ce_mpi, 'ce_mpi.csv')
 #物种：rsi
-ce_rsi1 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/rsi/CIRCexplorer3/rsi1.txt',
+ce_rsi1 <- read.table('re_analysis/rsi/CIRCexplorer3/rsi1.txt',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','score','strand','thickStart','thickEnd','itemRgb',
@@ -512,7 +520,7 @@ ce_rsi1 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/
 write.csv(ce_rsi1, 'ce_rsi1.csv')
 ce_rsi1 <- ce_rsi1 %>% mutate(circ_id=paste(chrom, ':', start, '|', end, sep = ''))
 ce_rsi1 <- ce_rsi1 %>% select(circ_id, rsi1 = readNumber)
-ce_rsi2 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/rsi/CIRCexplorer3/rsi2.txt',
+ce_rsi2 <- read.table('re_analysis/rsi/CIRCexplorer3/rsi2.txt',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','score','strand','thickStart','thickEnd','itemRgb',
@@ -521,7 +529,7 @@ ce_rsi2 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/
 write.csv(ce_rsi2, 'ce_rsi2.csv')
 ce_rsi2 <- ce_rsi2 %>% mutate(circ_id=paste(chrom, ':', start, '|', end, sep = ''))
 ce_rsi2 <- ce_rsi2 %>% select(circ_id, rsi2 = readNumber)
-ce_rsi3 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/rsi/CIRCexplorer3/rsi3.txt',
+ce_rsi3 <- read.table('re_analysis/rsi/CIRCexplorer3/rsi3.txt',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','score','strand','thickStart','thickEnd','itemRgb',
@@ -530,7 +538,7 @@ ce_rsi3 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/
 write.csv(ce_rsi3, 'ce_rsi3.csv')
 ce_rsi3 <- ce_rsi3 %>% mutate(circ_id=paste(chrom, ':', start, '|', end, sep = ''))
 ce_rsi3 <- ce_rsi3 %>% select(circ_id, rsi3 = readNumber)
-ce_rsi4 <- read.table('H:/Data/11 Bioinformatic analysis/multi_milk/re_analysis/rsi/CIRCexplorer3/rsi4.txt',
+ce_rsi4 <- read.table('re_analysis/rsi/CIRCexplorer3/rsi4.txt',
                       header = F,
                       sep = '\t',
                       col.names = c('chrom','start','end','name','score','strand','thickStart','thickEnd','itemRgb',
@@ -693,9 +701,9 @@ rsi.cq2 <- rsi.cq2[!duplicated(rsi.cq2$gene_name),]
 #但gff3文件包含gene_id和gene_name，因此需要手动依据gff3文件构建gene_id=gene_name的索引，在gff3文件中分别为ID和Name
 #读取mfu和mpi的gff3文件转换为数据框格式
 library(rtracklayer)
-gffmfu <- import('H:/Data/11 Bioinformatic analysis/multi_milk/mfu.gff3')
+gffmfu <- import('mfu.gff3')
 gffmfu <- as.data.frame(gffmfu)
-gffmpi <- import('H:/Data/11 Bioinformatic analysis/multi_milk/mpi.gff3')
+gffmpi <- import('mpi.gff3')
 gffmpi <- as.data.frame(gffmpi)
 #读取mfu和mpi中，三种分析方法merge后的circRNA的circ_id
 mfu_id <- merge(ce_mfu, cq_mfu, by = 'circ_id', all = F)

@@ -1,5 +1,5 @@
 suppressPackageStartupMessages(library(ComplexHeatmap))
-setwd("D:/跨物种筛选保守circRNA")
+source(if (file.exists("New-analysis/00_project_setup.R")) "New-analysis/00_project_setup.R" else "00_project_setup.R", encoding = "UTF-8")
 
 presence <- read.csv("New-analysis/gene_presence_matrix.csv", stringsAsFactors = FALSE)
 SPECIES <- c("hsa", "mfu", "mma", "mmu", "mpi", "rsi")

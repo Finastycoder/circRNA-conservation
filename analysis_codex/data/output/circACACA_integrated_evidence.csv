@@ -1,0 +1,7 @@
+species,species_label,clade,ACACA_host_gene_present,ACACA_mRNA_evidence,circAtlas_available,circAtlas_ACACA_count,milk_sequencing_circACACA_detected,milk_sequencing_circACACA_count,integrated_circACACA_evidence,integrated_status,interpretation
+hsa,Human (hsa),Primate,True,True,True,317,False,0,True,circAtlas only,"ACACA-related circRNA present in circAtlas, not detected in this study's milk sequencing"
+mma,Rhesus (mma),Primate,True,True,True,92,False,0,True,circAtlas only,"ACACA-related circRNA present in circAtlas, not detected in this study's milk sequencing"
+mmu,Mouse (mmu),Rodent,True,True,True,56,True,9,True,Milk + circAtlas,ACACA-related circRNA detected in this study's milk sequencing
+mfu,Long-winged bat (mfu),Bat,True,True,False,,True,6,True,Milk sequencing,ACACA-related circRNA detected in this study's milk sequencing
+mpi,Big-footed bat (mpi),Bat,True,True,False,,True,1,True,Milk sequencing,ACACA-related circRNA detected in this study's milk sequencing
+rsi,Horseshoe bat (rsi),Bat,True,True,False,,True,8,True,Milk sequencing,ACACA-related circRNA detected in this study's milk sequencing
